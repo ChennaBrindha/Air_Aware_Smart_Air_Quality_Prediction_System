@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AQI Prediction System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Air Quality Prediction System</h1>
+
+    <form action="/predict" method="POST">
+
+        <label>City</label>
+        <select name="city">
+            <option>Delhi</option>
+            <option>Mumbai</option>
+            <option>Chennai</option>
+            <option>Kolkata</option>
+            <option>Hyderabad</option>
+            <option>Bangalore</option>
+            <option>Pune</option>
+            <option>Ahmedabad</option>
+            <option>Surat</option>
+            <option>Vizag</option>
+            <option>Kochi</option>
+            <option>Jaipur</option>
+            <option>Lucknow</option>
+            <option>Kanpur</option>
+            <option>Nagpur</option>
+            <option>Indore</option>
+            <option>Thane</option>
+            <option>Bhopal</option>
+            <option>Patna</option>
+        </select>
+
+        <label>PM2.5</label>
+        <input type="number" name="pm25" value="25" step="0.1">
+
+        <label>PM10</label>
+        <input type="number" name="pm10" value="40" step="0.1">
+        
+        <label>NO</label>
+        <input type="number" name="=no" value="2">
+
+        <label>NO2</label>
+        <input type="number" name="no2" value="35">
+
+        <label>NOx</label>
+        <input type="number" name="nox" value="20">
+
+        <label>NH3</label>
+        <input type="number" name="nh3" value="50">
+
+        <label>CO</label>
+        <input type="number" name="co" value="0.5">
+
+        <label>SO2</label>
+        <input type="number" name="so2" value="10">
+
+        <label>O3</label>
+        <input type="number" name="o3" value="30">
+
+        <label>Benzene</label>
+        <input type="number" name="benzene" value="0.5">
+
+        <label>Toluene</label>
+        <input type="number" name="toluene" value="0.5">
+
+        <label>Xylene</label>
+        <input type="number" name="xylene" value="0.5">
+
+        
+        <button type="submit">Predict AQI Category</button>
+    </form>
+
+    {% if result %}
+        <h2 class="result">Predicted AQI Category: <span>{{ result }}</span></h2>
+    {% endif %}
+</div>
+
+</body>
+</html>
