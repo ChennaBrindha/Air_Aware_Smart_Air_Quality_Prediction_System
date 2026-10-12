@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.impute import SimpleImputer
 # ADDED SelectKBest for feature selection possibility
 from sklearn.feature_selection import VarianceThreshold 
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier, VotingRegressor
 from xgboost import XGBClassifier
 
 # ---------------------------------------------------------
@@ -102,7 +102,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 # 7. Optimized Base Models
 # ---------------------------------------------------------
 # Optimized Random Forest: Increased depth and more estimators for better coverage
-rf_model = RandomForestClassifier(
+from sklearn.ensemble import RandomForestRegressor
+rf_model = RandomForestRegressor(
     n_estimators=600, 
     max_depth=30, # Increased complexity
     min_samples_split=2, 
@@ -112,15 +113,15 @@ rf_model = RandomForestClassifier(
 )
 
 # Optimized XGBoost: Significantly increased estimators, reduced learning rate, tuned sampling
-xgb_model = XGBClassifier(
+from xgboost import XGBRegressor
+xgb_model = XGBRegressor(
     n_estimators=1000, # Significantly increased
     learning_rate=0.05, # Reduced for better generalization (more steps)
     max_depth=7, # Slightly increased
     subsample=0.8, # Row subsampling
     colsample_bytree=0.8, # Feature subsampling
-    objective="multi:softprob",
-    num_class=num_classes,
-    eval_metric="mlogloss",
+    objective="reg:squarederror", # Updated for regression
+    eval_metric="rmse", # Updated for regression
     use_label_encoder=False, # Suppress warning for recent XGBoost versions
     n_jobs=-1, # Use all available cores
     random_state=42
@@ -130,7 +131,7 @@ xgb_model = XGBClassifier(
 # 8. Voting Ensemble (Soft Voting)
 # ---------------------------------------------------------
 # Using only the two strong, optimized models
-ensemble_model = VotingClassifier(
+ensemble_model = VotingRegressor(
     estimators=[
         ("rf", rf_model),
         ("xgb", xgb_model)

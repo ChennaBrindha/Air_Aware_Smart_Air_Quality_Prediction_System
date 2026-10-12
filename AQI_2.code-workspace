@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../AQI_time_series"
+		}
+	],
+	"settings": {}
+}
